@@ -1,4 +1,4 @@
-# ex_clean_architecture 
+# ex_monolitos
 Projeto de exemplo de aplicação de Monólitos com TypeScript
 
 
