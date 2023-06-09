@@ -1,4 +1,4 @@
-import AddProductUsecase from "./add-product.usecase";
+import AddProductUseCase from "./add-product.usecase";
 
 describe("Add product usecase unit test", () => {
     
@@ -9,7 +9,7 @@ describe("Add product usecase unit test", () => {
 
     it("should add a product", async () => {        
         const productRepository = MockRepository();        
-        const usecase = new AddProductUsecase(productRepository);
+        const usecase = new AddProductUseCase(productRepository);
 
         const input = {
             name: "product name",
