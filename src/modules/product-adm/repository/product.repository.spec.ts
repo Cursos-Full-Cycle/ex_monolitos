@@ -19,9 +19,9 @@ describe("ProductRepository test", () => {
     await sequelize.sync();
   });
 
-  afterEach(async () => {
-    await sequelize.close();
-  });
+  // afterEach(async () => {
+  //   await sequelize.close();
+  // });
 
   it("should create a product", async () => {
     const productProps = {
@@ -67,6 +67,14 @@ describe("ProductRepository test", () => {
     expect(product.stock).toEqual(10);
 
     
+  });
+
+  it("should throw an error when customer is not found ", async () => {
+    const customerRepository= new ProductRepository();
+    const id = '11222';
+    expect(async () => {
+        await customerRepository.find(id);
+    }).rejects.toThrow(`Product with id ${id} not found`);
   });
 
 
