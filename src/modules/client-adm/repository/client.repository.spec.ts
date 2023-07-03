@@ -66,4 +66,11 @@ describe("ClientRepository test", () => {
 
   });
 
+  it("should throw an error when client is not found ", async () => {
+    const clientRepository= new ClientRepository();
+    expect(async () => {
+        await clientRepository.find("11222");
+    }).rejects.toThrow("Client with id 11222 not found");
+});
+
 });
