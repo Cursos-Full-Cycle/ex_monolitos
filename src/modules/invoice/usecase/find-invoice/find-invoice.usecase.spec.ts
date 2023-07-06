@@ -2,6 +2,7 @@ import Id from "../../../@shared/domain/value-object/id.value-object";
 import Invoice from "../../domain/invoice.entity";
 import Product from "../../domain/product.entity";
 import Address from "../../valueobject/address.valueobject";
+import FindInvoiceUseCase from "./find-invoice.usecase";
 
 const invoice = new Invoice({
     id: new Id("1"),
@@ -31,27 +32,38 @@ const invoice = new Invoice({
 
 const MockRepository = () => {
     return {
-        find: jest.fn().mockReturnValue(invoice)
+        find: jest.fn().mockReturnValue(invoice),
+        generate: jest.fn(),
     }
 }
 
 describe("Find invoice UseCase unit test", () => {
     it("should find a invoice", async () => {
-        // const invoiceRepository = MockRepository();
-        // const useCase = new FindInvoiceUseCase(invoiceRepository);
-        // const input = {
-        //     id: "1"
-        // };
+        const invoiceRepository = MockRepository();
+        const useCase = new FindInvoiceUseCase(invoiceRepository);
 
-        // const result = await useCase.execute(input);
+        const input = {
+            id: "1"
+        };
 
-        // expect(invoiceRepository.find).toHaveBeenCalled();
-        // expect(result.transactionId).toBe(transactionApproved.id.id);
-        // expect(result.orderId).toBe("1");
-        // expect(result.amount).toBe(100);
-        // expect(result.status).toBe("approved");
-        // expect(result.createdAt).toStrictEqual(transactionApproved.createdAt);
-        // expect(result.updatedAt).toStrictEqual(transactionApproved.updatedAt);
+        const result = await useCase.execute(input);
+
+        expect(invoiceRepository.find).toHaveBeenCalled();
+        expect(result.id).toBe(invoice.id.id);
+        expect(result.name).toBe(invoice.name);
+        expect(result.document).toBe(invoice.document);
+        expect(result.address.street).toBe(invoice.address.street);
+        expect(result.address.number).toBe(invoice.address.number);
+        expect(result.address.complement).toBe(invoice.address.complement);
+        expect(result.address.city).toBe(invoice.address.city);
+        expect(result.address.state).toBe(invoice.address.state);
+        expect(result.address.zipCode).toBe(invoice.address.zipCode);
+        expect(result.items[0].id).toBe(invoice.items[0].id.id);
+        expect(result.items[0].name).toBe(invoice.items[0].name);
+        expect(result.items[0].price).toBe(invoice.items[0].price);
+        expect(result.items[1].id).toBe(invoice.items[1].id.id);
+        expect(result.items[1].name).toBe(invoice.items[1].name);
+        expect(result.items[1].price).toBe(invoice.items[1].price);
     });
 
     // it("should decline a transaction", async () => {
