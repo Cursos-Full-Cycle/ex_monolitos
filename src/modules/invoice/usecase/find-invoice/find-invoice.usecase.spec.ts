@@ -64,24 +64,5 @@ describe("Find invoice UseCase unit test", () => {
         expect(result.items[1].id).toBe(invoice.items[1].id.id);
         expect(result.items[1].name).toBe(invoice.items[1].name);
         expect(result.items[1].price).toBe(invoice.items[1].price);
-    });
-
-    // it("should decline a transaction", async () => {
-    //     const paymentRepository = MockRepositoryDeclined();
-    //     const useCase = new ProcessPaymentUseCase(paymentRepository);
-    //     const input = {
-    //         amount: 99,
-    //         orderId: "1"
-    //     };
-
-    //     const result = await useCase.execute(input);
-
-    //     expect(paymentRepository.save).toHaveBeenCalled();
-    //     expect(result.transactionId).toBe(transactionDeclined.id.id);
-    //     expect(result.orderId).toBe("1");
-    //     expect(result.amount).toBe(99);
-    //     expect(result.status).toBe("declined");
-    //     expect(result.createdAt).toStrictEqual(transactionDeclined.createdAt);
-    //     expect(result.updatedAt).toStrictEqual(transactionDeclined.updatedAt);
-    // });
+    });    
 });
