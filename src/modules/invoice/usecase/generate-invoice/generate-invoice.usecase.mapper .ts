@@ -7,6 +7,7 @@ import { GenerateInvoiceUseCaseInputDto, GenerateInvoiceUseCaseOutputDto } from 
 export default class GenerateInvoiceUsecaseMapper {
   static toEntity(input: GenerateInvoiceUseCaseInputDto): Invoice {
     return new Invoice({
+      id: new Id(input.id),
       name: input.name,
       document: input.document,
       address: new Address({
