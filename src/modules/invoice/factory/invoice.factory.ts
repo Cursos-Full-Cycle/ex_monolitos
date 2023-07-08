@@ -1,5 +1,5 @@
 import InvoiceFacade from "../facade/invoice.facade";
-import InvoiceRepository from "../repository/invoice.repository";
+import InvoiceRepository from "../repository/invoice/invoice.repository";
 import FindInvoiceUseCase from "../usecase/find-invoice/find-invoice.usecase";
 import GenerateInvoiceUseCase from "../usecase/generate-invoice/generate-invoice.usecase";
 

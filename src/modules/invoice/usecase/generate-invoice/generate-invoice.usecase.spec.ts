@@ -35,7 +35,7 @@ describe("Generate invoice UseCase unit test", () => {
                     price: 200,
                 },
             ]    
-            };
+        };
 
         const result = await useCase.execute(invoiceInput);
 
@@ -52,6 +52,6 @@ describe("Generate invoice UseCase unit test", () => {
         expect(result.items[0].id).toEqual(invoiceInput.items[0].id);
         expect(result.items[0].name).toEqual(invoiceInput.items[0].name);
         expect(result.items[0].price).toEqual(invoiceInput.items[0].price);
-        expect(result.total).toBeDefined();
+        expect(result.total).toBe(300);
     });    
 });

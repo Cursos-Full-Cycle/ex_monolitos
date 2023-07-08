@@ -1,6 +1,6 @@
 import Id from "../../../@shared/domain/value-object/id.value-object";
-import Invoice from "../../domain/invoice.entity";
-import Product from "../../domain/product.entity";
+import Invoice from "../../domain/invoice/invoice.entity";
+import Product from "../../domain/product/product.entity";
 import Address from "../../valueobject/address.valueobject";
 import FindInvoiceUseCase from "./find-invoice.usecase";
 
@@ -64,5 +64,6 @@ describe("Find invoice UseCase unit test", () => {
         expect(result.items[1].id).toBe(invoice.items[1].id.id);
         expect(result.items[1].name).toBe(invoice.items[1].name);
         expect(result.items[1].price).toBe(invoice.items[1].price);
+        expect(result.total).toBe(invoice.total)
     });    
 });

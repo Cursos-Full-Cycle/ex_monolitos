@@ -1,11 +1,5 @@
-import {
-    Column,
-    HasMany,
-    Model,
-    PrimaryKey,
-    Table,
-  } from "sequelize-typescript";
-import ProductModel from "./product.model";
+import {Column, HasMany, Model, PrimaryKey, Table,} from "sequelize-typescript";
+import ProductModel from "../product/product.model";
   
 @Table({
     tableName: "invoices",

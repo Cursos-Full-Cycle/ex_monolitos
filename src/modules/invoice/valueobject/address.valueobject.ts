@@ -47,6 +47,4 @@ export default class Address {
     get zipCode(): string {
         return this._zipCode;
     }
-    
-
 }

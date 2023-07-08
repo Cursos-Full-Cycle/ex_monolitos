@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import ProductModel from "../repository/product.model";
-import InvoiceModel from "../repository/invoice.model";
+import ProductModel from "../repository/product/product.model";
+import InvoiceModel from "../repository/invoice/invoice.model";
 import InvoiceFacadeFactory from "../factory/invoice.factory";
 
 describe("InvoiceFacade test", () => {
@@ -133,9 +133,6 @@ describe("InvoiceFacade test", () => {
         expect(invoice.items[1].price).toEqual(input.items[1].price);
         expect(invoice.createdAt).toBeDefined;
         expect(invoice.total).toEqual(30);
-
-
-    //     expect(productStock.stock).toBe(input.stock);
 
     });
 

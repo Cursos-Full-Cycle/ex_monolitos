@@ -1,4 +1,4 @@
-import Invoice from "../../domain/invoice.entity";
+import Invoice from "../../domain/invoice/invoice.entity";
 import { FindInvoiceUseCaseOutputDto } from "./find-invoice.dto";
 
 export default class FindInvoiceUsecaseMapper {
@@ -23,7 +23,7 @@ export default class FindInvoiceUsecaseMapper {
         };
       }),
       total: invoice.total,
-      createdAt: invoice.createdAt,
+      createdAt: invoice.createdAt      
     };
   }
 }
