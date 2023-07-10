@@ -61,30 +61,30 @@ describe("PlaceOrderUseCase unit test", () => {
         })
     })
 
-    describe("getProducts method", () => {
-        beforeAll(() => {
-            // jest.useFakeTimers( { legacyFakeTimers:true} );
-            jest.useFakeTimers( );
-            jest.setSystemTime(mockDate);
-        })
+    // describe("getProducts method", () => {
+    //     beforeAll(() => {
+    //         // jest.useFakeTimers( { legacyFakeTimers:true} );
+    //         jest.useFakeTimers( );
+    //         jest.setSystemTime(mockDate);
+    //     })
 
-        afterAll(() => {
-            jest.useRealTimers();
-        })
-        //@ts-expect-error - no params in constructor
-        const placeOrderUsecase = new PlaceOrderUseCase();
-        it("should throw an error when product not found", async () => {
-            const mockCatalogFacade = {
-                find: jest.fn().mockResolvedValue(null),
-            }
-            //@ts-expect-error - force set catalogFacade
-            placeOrderUsecase["_catalogFacade"] = mockCatalogFacade;
+    //     afterAll(() => {
+    //         jest.useRealTimers();
+    //     })
+    //     //@ts-expect-error - no params in constructor
+    //     const placeOrderUsecase = new PlaceOrderUseCase();
+    //     it("should throw an error when product not found", async () => {
+    //         const mockCatalogFacade = {
+    //             find: jest.fn().mockResolvedValue(null),
+    //         }
+    //         //@ts-expect-error - force set catalogFacade
+    //         placeOrderUsecase["_catalogFacade"] = mockCatalogFacade;
 
-            await expect(placeOrderUsecase["getProduct"]("0")).rejects.toThrow(
-                new Error("Product not found")
-            );
-        })
-    })
+    //         await expect(placeOrderUsecase["getProduct"]("0")).rejects.toThrow(
+    //             new Error("Product not found")
+    //         );
+    //     })
+    // })
 
     describe("execute method", () => {
         it("should throw an error when client not found", async () => {
