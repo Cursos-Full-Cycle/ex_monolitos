@@ -28,7 +28,13 @@ describe("ClientRepository test", () => {
         id: "1",
         name: "John Doe",
         email: "a@a.com",
+        document: "123456789",
         address: "Rua 1",
+        number: "123",
+        complement: "Casa",
+        city: "São Paulo",
+        state: "SP",
+        zipCode: "12345678",
         createdAt: new Date(),
         updatedAt: new Date(),
     });
@@ -38,7 +44,13 @@ describe("ClientRepository test", () => {
     expect(result.id.id).toEqual(client.id);
     expect(result.name).toEqual(client.name);
     expect(result.email).toEqual(client.email);
+    expect(result.document).toEqual(client.document);
     expect(result.address).toEqual(client.address);
+    expect(result.number).toEqual(client.number);
+    expect(result.complement).toEqual(client.complement);
+    expect(result.city).toEqual(client.city);
+    expect(result.state).toEqual(client.state);
+    expect(result.zipCode).toEqual(client.zipCode);
     expect(result.createdAt).toStrictEqual(client.createdAt);
     expect(result.updatedAt).toStrictEqual(client.updatedAt);
 
@@ -49,7 +61,13 @@ describe("ClientRepository test", () => {
         id: new Id("1"),
         name: "John Doe",
         email: "a@a.com",
+        document: "123456789",
         address: "Rua 1",
+        number: "123",
+        complement: "Casa",
+        city: "São Paulo",
+        state: "SP",
+        zipCode: "12345678",
     });
 
     const repository = new ClientRepository();
@@ -60,7 +78,13 @@ describe("ClientRepository test", () => {
     expect(clientDb.id).toEqual(client.id.id);
     expect(clientDb.name).toEqual(client.name);
     expect(clientDb.email).toEqual(client.email);
+    expect(clientDb.document).toEqual(client.document);
     expect(clientDb.address).toEqual(client.address);
+    expect(clientDb.number).toEqual(client.number);
+    expect(clientDb.complement).toEqual(client.complement);
+    expect(clientDb.city).toEqual(client.city);
+    expect(clientDb.state).toEqual(client.state);
+    expect(clientDb.zipCode).toEqual(client.zipCode);
     expect(clientDb.createdAt).toStrictEqual(client.createdAt);
     expect(clientDb.updatedAt).toStrictEqual(client.updatedAt);
 

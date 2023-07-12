@@ -39,7 +39,7 @@ export default class Order extends BaseEntity {
         return this._status;
     }
 
-    total(): number {
+    get total(): number {
         return this._products.reduce((total, product) => {
             return total + product.salesPrice
         } , 0);

@@ -1,24 +1,38 @@
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
 import ClientAdmFacadeInterface from "../../../client-adm/facade/client-adm.facade.interface";
+import InvoiceFacadeInterface from "../../../invoice/facade/invoice.facade.interface";
+import PaymentFacadeInterface from "../../../payment/facade/payment.facade.interface";
 import ProductAdmFacadeInterface from "../../../product-adm/facade/product-adm.facade.interface";
 import StoreCatalogFacadeInterface from "../../../store-catalog/facade/store-catalog.facade.interface";
 import Client from "../../domain/client.entity";
 import Order from "../../domain/order.entity";
 import Product from "../../domain/product.entity";
+import CheckoutGateway from "../../gateway/checkout.gateway";
 import { PlaceOrderInputDto, PlaceOrderOutputDto } from "./place-order.dto";
 
 export default class PlaceOrderUseCase implements UseCaseInterface {
     private _clientFacade: ClientAdmFacadeInterface;
     private _productFacade: ProductAdmFacadeInterface;
     private _catalogFacade: StoreCatalogFacadeInterface;
+    private _repositoryCheckout: CheckoutGateway;
+    private _invoiceFacade: InvoiceFacadeInterface;
+    private _paymentFacade: PaymentFacadeInterface;
+    
     
     constructor(clientFacade: ClientAdmFacadeInterface,
                 productFacade: ProductAdmFacadeInterface,
-                catalogFacade: StoreCatalogFacadeInterface) {
+                catalogFacade: StoreCatalogFacadeInterface,
+                repositoryCheckout: CheckoutGateway,
+                invoiceFacade: InvoiceFacadeInterface,
+                paymentFacade: PaymentFacadeInterface) {
         this._clientFacade = clientFacade;
         this._productFacade = productFacade;
         this._catalogFacade = catalogFacade;
+        this._repositoryCheckout = repositoryCheckout;
+        this._invoiceFacade = invoiceFacade;
+        this._paymentFacade = paymentFacade;
+
     }
 
     // constructor() {
@@ -49,6 +63,34 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         });
 
         //processar o payment
+        const payment = await this._paymentFacade.process({
+            orderId: order.id.id,
+            amount: order.total,   
+        });
+
+        const invoice = 
+            payment.status === "approved" ?
+                await this._invoiceFacade.generate({
+                    name: client.name,
+                    document: client.document,
+                    street: client.address,
+                    number: client.number,
+                    complement: client.complement,
+                    city: client.city,
+                    state: client.state,
+                    zipCode: client.zipCode,
+                    items: products.map((p) => {
+                        return {
+                            id: p.id.id,
+                            name: p.name,
+                            price: p.salesPrice,
+                        };
+                    }),
+                }) : null;
+        
+        payment.status === "approved" && order.approved();
+        this._repositoryCheckout.addOrder(order);
+
 
         //caso o pagamento seja aprovado -> gerar o invoice
 
@@ -57,11 +99,15 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
 
 
         return {
-            id: "1",
-            invoiceId: "1",
-            status: "pending",
-            total: 100,
-            products: []
+            id: order.id.id,
+            invoiceId: payment.status === "approved" ? invoice.id : null,
+            status: order.status,
+            total: order.total,
+            products: order.products.map((p) => {
+                return {
+                    productId: p.id.id,
+                };
+            }),
         };        
     }
 
