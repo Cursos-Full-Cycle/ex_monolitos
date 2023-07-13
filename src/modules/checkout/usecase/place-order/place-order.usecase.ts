@@ -91,13 +91,6 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         payment.status === "approved" && order.approved();
         this._repositoryCheckout.addOrder(order);
 
-
-        //caso o pagamento seja aprovado -> gerar o invoice
-
-        //mudar o status da ordem para approved
-        //retornar dto
-
-
         return {
             id: order.id.id,
             invoiceId: payment.status === "approved" ? invoice.id : null,
