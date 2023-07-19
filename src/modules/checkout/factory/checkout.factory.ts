@@ -10,12 +10,17 @@ import PaymentFacade from "../../payment/facade/payment.facade";
 import TransactionRepository from "../../payment/repository/transaction.repository";
 import ProcessPaymentUseCase from "../../payment/usecase/process-payment/process-payment.usecase";
 import ProductAdmFacade from "../../product-adm/facade/product-adm.facade";
-import ProductRepository from "../../product-adm/repository/product.repository";
 import AddProductUseCase from "../../product-adm/usecase/add-product/add-product.usecase";
 import StockProductUseCase from "../../product-adm/usecase/stock-product/stock-product.usecase";
 import StoreCatalogFacade from "../../store-catalog/facade/store-catalog.facade";
 import FindProductUseCase from "../../store-catalog/usecase/find-product/find-product.usecase";
 import OrderRepository from "../repository/order/order.repository";
+import FindAllProductsUseCase from "../../store-catalog/usecase/find-all-products/find-all-products.usecase";
+import ProductRepository from "../../product-adm/repository/product.repository";
+import CheckoutFacade from "../facade/checkout.facade";
+import PlaceOrderUseCase from "../usecase/place-order/place-order.usecase";
+import ProductStoreCatalogRepository from "../../store-catalog/repository/product.repository";
+
 
 export default class CheckoutFacadeFactory {
     static create() {
@@ -36,12 +41,14 @@ export default class CheckoutFacadeFactory {
             stockUseCase: checkStockUseCase,
         });
         
-        // const productStoreCatalogRepository = new ProductRepository();
-        // const findUseCase = new FindProductUseCase(productRepository);
-        // findAllUseCase: FindAllProductsUseCase
-        // const catalogFacade = new StoreCatalogFacade({
+        const productStoreCatalogRepository = new ProductStoreCatalogRepository();
+        const findUseCase = new FindProductUseCase(productStoreCatalogRepository);        
+        const findAllUseCase = new FindAllProductsUseCase(productStoreCatalogRepository);
+        const catalogFacade = new StoreCatalogFacade({
+            findUseCase: findUseCase,
+            findAllUseCase: findAllUseCase,
+        });
 
-        // });
         const invoiceRepository = new InvoiceRepository();
         const find = new FindInvoiceUseCase(invoiceRepository);
         const generate = new GenerateInvoiceUseCase(invoiceRepository);
@@ -53,6 +60,15 @@ export default class CheckoutFacadeFactory {
         const processPaymentUseCase = new ProcessPaymentUseCase(transactionRepository);
         const paymentFacade = new PaymentFacade(processPaymentUseCase);
 
-        return invoiceFacade;
+        const placeOrderUseCase = new PlaceOrderUseCase(
+            clientFacade,
+            productFacade,
+            catalogFacade,
+            orderRepository,
+            invoiceFacade,
+            paymentFacade
+        );
+
+        return new CheckoutFacade(placeOrderUseCase);
     }
 }

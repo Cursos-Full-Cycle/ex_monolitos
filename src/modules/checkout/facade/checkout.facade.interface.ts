@@ -16,5 +16,5 @@ export interface PlaceOrderFacadeOutputDto {
 }
 
 export default interface CheckoutFacadeInterface {
-    PlaceOrder(input: PlaceOrderFacadeInputDto): Promise<PlaceOrderFacadeOutputDto>;
+    placeOrder(input: PlaceOrderFacadeInputDto): Promise<PlaceOrderFacadeOutputDto>;
 }

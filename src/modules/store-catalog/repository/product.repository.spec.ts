@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import ProductModel from "./product.model";
-import ProductRepository from "./product.repository";
+import ProductStoreCatalogRepository from "./product.repository";
+import StoreCatalogProductModel from "./product.model";
 
 
 describe("ProductRepository test", () => {
@@ -14,7 +14,7 @@ describe("ProductRepository test", () => {
       sync: { force: true },
     });
 
-    await sequelize.addModels([ProductModel]);
+    await sequelize.addModels([StoreCatalogProductModel]);
     await sequelize.sync();
   });
 
@@ -23,21 +23,21 @@ describe("ProductRepository test", () => {
   // });
 
   it("should find all products", async () => {
-    await ProductModel.create({
+    await StoreCatalogProductModel.create({
         id: "1",
         name: "Product 1",
         description: "Product 1 description",
         salesPrice: 100,
     });
 
-    await ProductModel.create({
+    await StoreCatalogProductModel.create({
         id: "2",
         name: "Product 2",
         description: "Product 2 description",
         salesPrice: 200,
     });
 
-    const productRepository = new ProductRepository();
+    const productRepository = new ProductStoreCatalogRepository();
     const products = await productRepository.findAll();
 
     expect(products.length).toBe(2);
@@ -53,8 +53,8 @@ describe("ProductRepository test", () => {
   });
 
   it ("should find a product", async () => {
-    const productRepository = new ProductRepository();
-    ProductModel.create({
+    const productRepository = new ProductStoreCatalogRepository();
+    StoreCatalogProductModel.create({
       id: "1",
       name: "Product 1",
       description: "Product 1 description",
@@ -71,7 +71,7 @@ describe("ProductRepository test", () => {
   });
 
   it("should throw an error when customer is not found ", async () => {
-    const customerRepository= new ProductRepository();
+    const customerRepository= new ProductStoreCatalogRepository();
     const id = '11222';
     expect(async () => {
         await customerRepository.find(id);

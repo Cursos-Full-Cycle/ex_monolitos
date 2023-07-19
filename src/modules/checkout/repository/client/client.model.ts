@@ -20,6 +20,6 @@ export default class ClientModel extends Model {
     declare address: string;
 
     @ForeignKey(() => OrderModel)
-    @Column({ allowNull: false, field: "order_id" })
+    @Column({ allowNull: true, field: "order_id" })
     declare order_id: string;
 }    

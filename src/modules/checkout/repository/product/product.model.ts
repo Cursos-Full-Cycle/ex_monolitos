@@ -20,6 +20,6 @@ export default class ProductModel extends Model {
     declare salesPrice: number;
 
     @ForeignKey(() => OrderModel)
-    @Column({ allowNull: false, field: "order_id" })
+    @Column({ allowNull: true, field: "order_id" })
     declare order_id: string;
 }    
