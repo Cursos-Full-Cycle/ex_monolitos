@@ -25,6 +25,10 @@ export default class Product extends BaseEntity implements AggregateRoot {
         this._description = props.description;
         this._purchasePrice = props.purchasePrice;
         this._stock = props.stock;
+
+        if (this._purchasePrice <= 0) {
+            throw new Error("Purchase price must be greater than zero");
+        }
     }
 
     get name(): string {

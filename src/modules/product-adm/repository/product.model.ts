@@ -9,21 +9,21 @@ export default class ProductAdmProductModel extends Model {
   @Column({ allowNull: false })
   declare id: string;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: true })
   declare name: string;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: true })
   declare description: string;
 
   @Column({ allowNull: false })
   declare purchasePrice: number;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: true })
   declare stock: number;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: true })
   declare createdAt: Date;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: true })
   declare updatedAt: Date;
 }
