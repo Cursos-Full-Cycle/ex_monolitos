@@ -1,8 +1,8 @@
-import { AddProductInputDto } from "../../modules/product-adm/usecase/add-product/add-product.dto";
+import { AddClientInputDto } from "../../modules/client-adm/usecase/add-client/add-client.usecase.dto";
 import {app, sequelize} from "../express";
 import request from "supertest";
 
-describe("E2E test for product", () => {
+describe("E2E test for client", () => {
     beforeEach(async () => {
         await sequelize.sync({force: true});
     });
@@ -11,35 +11,45 @@ describe("E2E test for product", () => {
     //     await sequelize.close();
     // });
 
-    it("should create a product", async () => {
+    it("should create a client", async () => {
         
-        const input: AddProductInputDto = {
-            name: "Product 1",
-            description: "Description 1",
-            purchasePrice: 10,
-            stock: 10,
+        const input: AddClientInputDto  = {
+            id: "1",
+            name: "John Doe",
+            email: "a@a.com",
+            document: "123456789",
+            address: "Rua 1",
+            number: "1",
+            complement: "Casa",
+            city: "São Paulo",
+            state: "SP",
+            zipCode: "12345678",
           };
 
         const response = await request(app)
-            .post("/products")
+            .post("/clients")
             .send(input);
 
         expect(response.status).toBe(201);
-        expect(response.body.name).toBe("Product 1");
-        expect(response.body.description).toBe("Description 1");
-        expect(response.body.purchasePrice).toBe(10);
-        expect(response.body.stock).toBe(10);
+        expect(response.body.name).toBe("John Doe");
+        expect(response.body.email).toBe("a@a.com");
+        expect(response.body.document).toBe("123456789");
+        expect(response.body.address).toBe("Rua 1");
+        expect(response.body.number).toBe("1");
+        expect(response.body.complement).toBe("Casa");
+        expect(response.body.city).toBe("São Paulo");
+        expect(response.body.state).toBe("SP");
+        expect(response.body.zipCode).toBe("12345678");
+
     });
 
-    // it("should not create a product with invalid data", async () => {
-    //     const response = await request(app)
-    //         .post("/products")
-    //         .send({
-    //             name: "Product 1",
-    //             purchasePrice: -1,
-    //         });            
-    //     expect(response.status).toBe(500);        
-    // });
+    it("should not create a client", async () => {
+        const response = await request(app).post("/clients").send({
+          name: "Name",
+        });
+    
+        expect(response.status).toBe(500);
+    });
 
     // it("should update a product", async () => {
     //     let response = await request(app)
