@@ -3,12 +3,12 @@ import Invoice from "../../domain/invoice/invoice.entity";
 import Product from "../../domain/product/product.entity";
 import InvoiceGateway from "../../gateway/invoice.gateway";
 import Address from "../../valueobject/address.valueobject";
-import ProductModel from "../product/product.model";
+import InvoiceProductModel from "../product/product.model";
 import InvoiceModel from "./invoice.model";
 
 export default class InvoiceRepository implements InvoiceGateway {
   async generate(invoice: Invoice): Promise<void> {
-    await ProductModel.destroy({
+    await InvoiceProductModel.destroy({
       where: { id: invoice.items.map((item) => item.id.id) },
     });
 
@@ -32,7 +32,7 @@ export default class InvoiceRepository implements InvoiceGateway {
         updatedAt: invoice.updatedAt,
       },
       {
-        include: [{ model: ProductModel }],
+        include: [{ model: InvoiceProductModel }],
       }
     );
   }
@@ -40,7 +40,7 @@ export default class InvoiceRepository implements InvoiceGateway {
   async find(id: string): Promise<Invoice> {
     const invoice = await InvoiceModel.findOne({
       where: { id },
-      include: [{ model: ProductModel }],
+      include: [{ model: InvoiceProductModel }],
     });
 
     if (!invoice) {

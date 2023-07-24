@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import ClientModel from "../repository/client.model";
 import ClientAdmFacadeFactory from "../factory/client-adm.facade.factory";
+import ClientAdmClientModel from "../repository/client.model";
 
 describe("Client-adm facade test", () => {
     let sequelize: Sequelize;
@@ -13,7 +13,7 @@ describe("Client-adm facade test", () => {
       sync: { force: true },
     });
 
-    await sequelize.addModels([ClientModel]);
+    await sequelize.addModels([ClientAdmClientModel]);
     await sequelize.sync();
   });
 
@@ -34,7 +34,7 @@ describe("Client-adm facade test", () => {
     };
     await facade.add(input);
 
-    const clientDb = await ClientModel.findOne({ where: { id: input.id } });
+    const clientDb = await ClientAdmClientModel.findOne({ where: { id: input.id } });
 
     expect(clientDb.id).toEqual(input.id);
     expect(clientDb.name).toEqual(input.name);

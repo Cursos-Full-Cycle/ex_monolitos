@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize-typescript";
-import ClientModel from "./client.model";
 import ClientRepository from "./client.repository";
 import Client from "../domain/client.entity";
 import Id from "../../@shared/domain/value-object/id.value-object";
+import ClientAdmClientModel from "./client.model";
 
 describe("ClientRepository test", () => {
     let sequelize: Sequelize;
@@ -15,7 +15,7 @@ describe("ClientRepository test", () => {
       sync: { force: true },
     });
 
-    await sequelize.addModels([ClientModel]);
+    await sequelize.addModels([ClientAdmClientModel]);
     await sequelize.sync();
   });
 
@@ -24,7 +24,7 @@ describe("ClientRepository test", () => {
   // });
 
   it("should find a client", async () => {
-    const client = await ClientModel.create({
+    const client = await ClientAdmClientModel.create({
         id: "1",
         name: "John Doe",
         email: "a@a.com",
@@ -73,7 +73,7 @@ describe("ClientRepository test", () => {
     const repository = new ClientRepository();
     await repository.add(client);
 
-    const clientDb = await ClientModel.findOne({ where: { id: client.id.id } });
+    const clientDb = await ClientAdmClientModel.findOne({ where: { id: client.id.id } });
 
     expect(clientDb.id).toEqual(client.id.id);
     expect(clientDb.name).toEqual(client.name);

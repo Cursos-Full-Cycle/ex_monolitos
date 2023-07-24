@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
-import ProductModel from "../repository/product/product.model";
 import InvoiceModel from "../repository/invoice/invoice.model";
 import InvoiceFacadeFactory from "../factory/invoice.factory";
+import InvoiceProductModel from "../repository/product/product.model";
 
 describe("InvoiceFacade test", () => {
     let sequelize: Sequelize;
@@ -14,7 +14,7 @@ describe("InvoiceFacade test", () => {
         sync: { force: true },
         });
 
-        await sequelize.addModels([ProductModel, InvoiceModel]);
+        await sequelize.addModels([InvoiceProductModel, InvoiceModel]);
         await sequelize.sync();
     });
 
@@ -54,7 +54,7 @@ describe("InvoiceFacade test", () => {
 
         const invoice = await InvoiceModel.findOne({
             where: { id: "1" },
-            include: [{ model: ProductModel }],
+            include: [{ model: InvoiceProductModel }],
         });
         
         expect(invoice).toBeDefined;
