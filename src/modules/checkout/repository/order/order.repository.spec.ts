@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize-typescript";
-import ProductModel from "../product/product.model";
 import OrderModel from "./order.model";
-import ClientModel from "../client/client.model";
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import Client from "../../domain/client/client.entity";
 import Product from "../../domain/product/product.entity";
 import Order from "../../domain/order/order.entity";
 import OrderRepository from "./order.repository";
+import CheckoutClientModel from "../client/client.model";
+import CheckoutProductModel from "../product/product.model";
 
 describe("OrderRepository test", () => {
   let sequelize: Sequelize;
@@ -19,7 +19,7 @@ describe("OrderRepository test", () => {
       sync: { force: true },
     });
 
-    await sequelize.addModels([OrderModel, ProductModel, ClientModel]);
+    await sequelize.addModels([OrderModel, CheckoutProductModel, CheckoutClientModel]);
     await sequelize.sync();
   });
 
@@ -59,7 +59,7 @@ describe("OrderRepository test", () => {
 
     const orderDb = await OrderModel.findOne({
        where: { id: orderProps.id.id },
-       include: [{ model: ProductModel }, { model: ClientModel }],
+       include: [{ model: CheckoutProductModel }, { model: CheckoutClientModel }],
     });
     
     expect(orderProps.id.id).toEqual(orderDb.id);

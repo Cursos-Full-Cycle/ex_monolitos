@@ -3,17 +3,17 @@ import Client from "../../domain/client/client.entity";
 import Order from "../../domain/order/order.entity";
 import Product from "../../domain/product/product.entity";
 import CheckoutGateway from "../../gateway/checkout.gateway";
-import ClientModel from "../client/client.model";
-import ProductModel from "../product/product.model";
+import CheckoutClientModel from "../client/client.model";
+import CheckoutProductModel from "../product/product.model";
 import OrderModel from "./order.model";
 
 export default class OrderRepository implements CheckoutGateway {
     async addOrder(order: Order): Promise<void> {
-        await ProductModel.destroy({
+        await CheckoutProductModel.destroy({
             where: { id: order.products.map((product) => product.id.id) },
         });
 
-        await ClientModel.destroy({
+        await CheckoutClientModel.destroy({
             where: { id: order.client.id.id },
         });
 
@@ -38,16 +38,16 @@ export default class OrderRepository implements CheckoutGateway {
 
             },
             {
-              include: [{ model: ProductModel },
-                        { model: ClientModel }],
+              include: [{ model: CheckoutProductModel },
+                        { model: CheckoutClientModel }],
             }
         );
     }
     async findOrder(id: string): Promise<Order> {
         const order = await OrderModel.findOne({
             where: { id },
-            include: [{ model: ProductModel }, 
-                      { model: ClientModel }],
+            include: [{ model: CheckoutProductModel }, 
+                      { model: CheckoutClientModel }],
         });
         
         if (!order) {

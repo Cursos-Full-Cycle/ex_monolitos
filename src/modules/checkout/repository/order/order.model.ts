@@ -1,6 +1,6 @@
 import { Column, HasMany, HasOne, Model, PrimaryKey, Table } from "sequelize-typescript";
-import ProductModel from "../product/product.model";
-import ClientModel from "../client/client.model";
+import CheckoutClientModel from "../client/client.model";
+import CheckoutProductModel from "../product/product.model";
 
 @Table({
   tableName: "oders",
@@ -14,11 +14,11 @@ export default class OrderModel extends Model {
     @Column({ allowNull: false })
     declare status: string;
 
-    @HasOne(() => ClientModel, 'order_id')
-    declare client: ClientModel;
+    @HasOne(() => CheckoutClientModel, 'order_id')
+    declare client: CheckoutClientModel;
 
-    @HasMany(() => ProductModel,'order_id')
-    declare products: ProductModel[];
+    @HasMany(() => CheckoutProductModel,'order_id')
+    declare products: CheckoutProductModel[];
 
     @Column({ allowNull: false })
     declare createdAt: Date;

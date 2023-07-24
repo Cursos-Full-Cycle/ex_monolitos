@@ -5,7 +5,7 @@ import OrderModel from "../order/order.model";
     tableName: "products",
     timestamps: false,
 })
-export default class ProductModel extends Model {
+export default class CheckoutProductModel extends Model {
     @PrimaryKey
     @Column({ allowNull: false })
     declare id: string;
