@@ -7,9 +7,9 @@ describe("E2E test for client", () => {
         await sequelize.sync({force: true});
     });
 
-    // afterAll(async () => {
-    //     await sequelize.close();
-    // });
+    afterAll(async () => {
+        await sequelize.close();
+    });
 
     it("should create a client", async () => {
         

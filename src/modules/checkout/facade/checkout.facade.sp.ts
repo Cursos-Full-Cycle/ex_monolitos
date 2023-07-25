@@ -2,11 +2,11 @@ import { Sequelize } from "sequelize-typescript";
 import OrderModel from "../repository/order/order.model";
 import CheckoutFacadeFactory from "../factory/checkout.factory";
 import ClientAdmFacadeFactory from "../../client-adm/factory/client-adm.facade.factory";
-import ClientModel from "../../client-adm/repository/client.model";
 import ProductAdmFacadeFactory from "../../product-adm/factory/facade.factory";
 import StoreCatalogProductModel from "../../store-catalog/repository/product.model";
 import ProductAdmProductModel from "../../product-adm/repository/product.model";
 import ProductModel from "../repository/product/product.model";
+import ClientAdmClientModel from "../../client-adm/repository/client.model";
 
 describe("Client-adm facade test", () => {
     let sequelize: Sequelize;
@@ -19,7 +19,7 @@ describe("Client-adm facade test", () => {
       sync: { force: true },
     });
 
-    await sequelize.addModels([ProductModel, ProductAdmProductModel, ClientModel, OrderModel, StoreCatalogProductModel]);
+    await sequelize.addModels([ProductModel, ProductAdmProductModel, ClientAdmClientModel, OrderModel, StoreCatalogProductModel]);
     await sequelize.sync();
   });
 
